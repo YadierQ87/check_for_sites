@@ -9,17 +9,20 @@ module CheckForSites
     ]
     def self.recorre_lista_servidores
       @lista_sitios.each do |sitio|
-        begin
-           http = Net::HTTP.new(sitio,80)
-           response = http.request_get('/')
-           if response.code >= "200" && response.code < "400"
-             puts "#{sitio}  is available!"
-           end
-        rescue SocketError => e
-             puts e.message
-             puts "|-> Connection could'nt be stablished for website #{sitio}"
-        end
-
+          busca_servidor(sitio)
       end
+    end
+    #metodo para buscar el sitio
+    def self.busca_servidor(sitio)
+        begin
+          http = Net::HTTP.new(sitio,80)
+          response = http.request_get('/')
+          if response.code >= "200" && response.code < "400"
+            puts "#{sitio}  is available!"
+          end
+        rescue SocketError => e
+          puts e.message
+          puts "|-> Connection could'nt be stablished for website #{sitio}"
+        end
     end
 end
